@@ -228,7 +228,15 @@
     if (minScale > maxScale) {
         minScale = maxScale;
     }
-        
+    
+    // Cap zooming on either end to prevent zooming too far, as well as prevent not being able to zoom at all
+    CGFloat minMaxRatio = maxScale / minScale;
+    if (minMaxRatio < 2) {
+        maxScale = minScale * 2;
+    } else if (minMaxRatio > 6) {
+        maxScale = minScale * 6;
+    }
+    
     self.maximumZoomScale = maxScale;
     self.minimumZoomScale = minScale;
 }
